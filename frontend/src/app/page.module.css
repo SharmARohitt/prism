@@ -1,0 +1,778 @@
+.page {
+  --home-bg: #06090d;
+  --home-surface: rgba(9, 14, 18, 0.88);
+  --home-border: rgba(94, 140, 160, 0.13);
+  --home-muted: #8fa0a8;
+  --home-dim: #57686f;
+  --home-mint: #5eead4;
+  --home-cyan: #38bdf8;
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  color: #e4edef;
+  /* Purely dark background — no bright radial blobs */
+  background:
+    radial-gradient(ellipse at 70% 0%, rgba(8, 30, 48, 0.55), transparent 40rem),
+    radial-gradient(ellipse at 15% 85%, rgba(10, 20, 40, 0.35), transparent 30rem),
+    linear-gradient(180deg, #06090d, #06090d);
+}
+
+.ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.3;
+  background-image:
+    linear-gradient(rgba(94, 140, 155, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(94, 140, 155, 0.028) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(180deg, black, transparent 52rem);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: min(1190px, calc(100% - 64px));
+  margin: 0 auto;
+}
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(360px, 0.94fr) minmax(400px, 1.06fr);
+  align-items: center;
+  min-height: 595px;
+  padding: 66px 0 74px;
+  border-bottom: 1px solid var(--home-border);
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 2;
+  padding: 4px 0 16px;
+  animation: rise-in 700ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #dce8e8;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.brandIcon {
+  width: 23px;
+  height: 23px;
+  color: var(--home-mint);
+  stroke-width: 1.8;
+}
+
+.identityDivider {
+  width: 1px;
+  height: 14px;
+  margin: 0 3px;
+  background: rgba(167, 193, 196, 0.35);
+}
+
+.identityDescriptor {
+  color: #85969d;
+  font: 500 9px/1.2 var(--font-mono, "JetBrains Mono"), monospace;
+  letter-spacing: 0.14em;
+}
+
+.kicker,
+.sectionIndex {
+  color: var(--home-mint);
+  font: 600 10px/1.4 var(--font-mono, "JetBrains Mono"), monospace;
+  letter-spacing: 0.15em;
+}
+
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 66px 0 18px;
+}
+
+.kickerMark {
+  display: inline-block;
+  width: 18px;
+  height: 1px;
+  background: var(--home-mint);
+  box-shadow: 0 0 10px rgba(113, 237, 207, 0.7);
+}
+
+.headline {
+  margin: 0;
+  color: #edf4f4;
+  font-size: clamp(54px, 6.2vw, 82px);
+  font-weight: 560;
+  letter-spacing: -0.07em;
+  line-height: 0.99;
+  text-wrap: balance;
+}
+
+.headline span {
+  color: var(--home-mint);
+}
+
+.intro {
+  margin: 27px 0 0;
+  color: #c1d0d2;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.description {
+  max-width: 440px;
+  margin: 12px 0 0;
+  color: var(--home-muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.scrollCue {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 37px;
+  color: #cbd9d9;
+  font: 600 10px/1.4 var(--font-mono, "JetBrains Mono"), monospace;
+  letter-spacing: 0.13em;
+  text-decoration: none;
+  transition: color 160ms ease, gap 160ms ease;
+}
+
+.scrollCue svg {
+  width: 15px;
+  height: 15px;
+  color: var(--home-mint);
+}
+
+.scrollCue:hover {
+  gap: 17px;
+  color: var(--home-mint);
+}
+
+.scrollCue:focus-visible,
+.repoButton:focus-visible {
+  outline: 2px solid var(--home-mint);
+  outline-offset: 4px;
+}
+
+.visual {
+  position: absolute;
+  inset: 0 -4% 0 38%;
+  overflow: hidden;
+  pointer-events: none;
+  /* Fade left edge into the text column */
+  mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 88%, transparent 100%);
+}
+
+/* No ::before overlay — PrismDiagram is fully self-contained dark */
+
+.visualGrid {
+  display: none;
+}
+
+.gradient {
+  display: none;
+}
+
+.visualFrame,
+.visualIndex,
+.visualCrosshair,
+.visualCaption {
+  display: none;
+}
+
+.connectSection {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.65fr) minmax(450px, 1.35fr);
+  gap: 42px;
+  align-items: center;
+  padding: 35px 0 32px;
+  border-bottom: 1px solid var(--home-border);
+}
+
+.connectHeading h2,
+.sectionTitleRow h2,
+.featureIntro h2 {
+  margin: 12px 0 0;
+  color: #e6eeee;
+  font-size: 21px;
+  font-weight: 510;
+  letter-spacing: -0.04em;
+}
+
+.connectForm {
+  min-width: 0;
+}
+
+.inputLabel {
+  display: block;
+  margin-bottom: 8px;
+  color: #9eafb4;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.inputRow {
+  display: flex;
+  gap: 10px;
+}
+
+.repositoryInput {
+  height: 48px;
+  border-color: rgba(151, 179, 187, 0.22);
+  border-radius: 3px;
+  background: rgba(8, 13, 17, 0.88);
+  color: #e5eeee;
+  font-size: 13px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.repositoryInput::placeholder {
+  color: #6d7f87;
+}
+
+.repositoryInput:focus-visible {
+  border-color: rgba(113, 237, 207, 0.72);
+  box-shadow: 0 0 0 2px rgba(113, 237, 207, 0.1);
+}
+
+.connectButton {
+  height: 48px;
+  flex: 0 0 auto;
+  border-radius: 3px;
+  background: var(--home-mint);
+  color: #06201c;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.connectButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: #8af3d9;
+}
+
+.connectButton:focus-visible {
+  outline: 2px solid #e8fffa;
+  outline-offset: 3px;
+}
+
+.connectButton:disabled {
+  cursor: wait;
+}
+
+.assurances {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px 23px;
+  margin-top: 12px;
+  color: #93a4aa;
+  font-size: 10px;
+}
+
+.assurances span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.assurances svg {
+  width: 13px;
+  height: 13px;
+  color: #72cdbb;
+  stroke-width: 1.7;
+}
+
+.error {
+  margin: 9px 0 0;
+  color: #ff8e8e;
+  font-size: 12px;
+}
+
+.statusSection {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--home-border);
+}
+
+.statusHeading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.statusPulse,
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #829098;
+}
+
+.statusPulse {
+  animation: status-pulse 2.4s ease-in-out infinite;
+}
+
+.statusGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-left: 1px solid var(--home-border);
+}
+
+.statusItem {
+  min-width: 0;
+  padding: 1px 20px;
+  border-right: 1px solid var(--home-border);
+}
+
+.statusLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8799a0;
+  font: 500 9px/1.4 var(--font-mono, "JetBrains Mono"), monospace;
+  letter-spacing: 0.1em;
+}
+
+.statusLabel svg {
+  width: 13px;
+  height: 13px;
+  color: #78b9b8;
+  stroke-width: 1.8;
+}
+
+.statusDot {
+  margin-left: auto;
+}
+
+.statusDot.online {
+  background: #5eead4;
+  box-shadow: 0 0 9px rgba(94, 234, 212, 0.75);
+}
+
+.statusItem p {
+  overflow: hidden;
+  margin: 7px 0 0 21px;
+  color: #d4dfdf;
+  font-size: 12px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recentSection {
+  padding: 40px 0 35px;
+  border-bottom: 1px solid var(--home-border);
+}
+
+.sectionTitleRow {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.sectionTitleRow h2 {
+  margin-top: 8px;
+}
+
+.repoCount {
+  color: #7e9098;
+  font: 500 9px/1.4 var(--font-mono, "JetBrains Mono"), monospace;
+  letter-spacing: 0.1em;
+}
+
+.repoList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 9px;
+}
+
+.repoButton {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid rgba(144, 171, 183, 0.16);
+  border-radius: 3px;
+  background: rgba(10, 16, 20, 0.66);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.repoButton:hover {
+  border-color: rgba(113, 237, 207, 0.48);
+  background: rgba(14, 27, 30, 0.9);
+}
+
+.repoIcon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(144, 171, 183, 0.18);
+  color: #a7bac0;
+}
+
+.repoIcon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.repoInfo {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+  margin-left: 12px;
+}
+
+.repoName {
+  overflow: hidden;
+  color: #e3eded;
+  font-size: 12px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.repoMeta {
+  color: #82939a;
+  font-size: 10px;
+}
+
+.repoMeta span {
+  margin: 0 4px;
+  color: #52636a;
+}
+
+.repoArrow {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  margin-left: auto;
+  color: #71858c;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.repoButton:hover .repoArrow {
+  transform: translateX(3px);
+  color: var(--home-mint);
+}
+
+.features {
+  display: grid;
+  grid-template-columns: 1.04fr repeat(3, 1fr);
+  gap: 0;
+  padding: 44px 0 42px;
+}
+
+.featureIntro {
+  padding-right: 28px;
+}
+
+.featureIntro h2 {
+  max-width: 190px;
+  font-size: 25px;
+  line-height: 1.14;
+}
+
+.featureItem {
+  min-width: 0;
+  padding: 0 22px;
+  border-left: 1px solid var(--home-border);
+}
+
+.featureTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #81949b;
+  font: 500 10px/1.4 var(--font-mono, "JetBrains Mono"), monospace;
+}
+
+.featureTopline svg {
+  width: 17px;
+  height: 17px;
+  color: var(--home-mint);
+  stroke-width: 1.7;
+}
+
+.featureItem h3 {
+  margin: 22px 0 8px;
+  color: #dbe6e7;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.featureItem p {
+  margin: 0;
+  color: #92a2a8;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 0 24px;
+  border-top: 1px solid var(--home-border);
+  color: #6e8087;
+  font: 500 8px/1.4 var(--font-mono, "JetBrains Mono"), monospace;
+  letter-spacing: 0.12em;
+}
+
+.footerBrand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #c5d3d5;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.footerBrand svg {
+  width: 15px;
+  height: 15px;
+  color: var(--home-mint);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(113, 237, 207, 0.32);
+    background: #5eead4;
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(113, 237, 207, 0);
+    background: #b7ffe9;
+  }
+}
+
+@media (max-width: 850px) {
+  .content {
+    width: min(100% - 44px, 680px);
+  }
+
+  .hero {
+    display: block;
+    min-height: 590px;
+    padding: 54px 0 54px;
+  }
+
+  .heroCopy {
+    padding-top: 10px;
+  }
+
+  .kicker {
+    margin-top: 64px;
+  }
+
+  .visual {
+    inset: 8% -18% 0 20%;
+    opacity: 0.7;
+  }
+
+  .connectSection {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .statusSection {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+
+  .statusGrid {
+    border-left: 0;
+  }
+
+  .statusItem:first-child {
+    padding-left: 0;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+    gap: 23px;
+  }
+
+  .featureIntro {
+    padding: 0 0 4px;
+  }
+
+  .featureIntro h2 {
+    max-width: unset;
+  }
+
+  .featureItem {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    column-gap: 13px;
+    padding: 15px 0 0;
+    border-top: 1px solid var(--home-border);
+    border-left: 0;
+  }
+
+  .featureTopline {
+    grid-row: span 2;
+    align-items: start;
+  }
+
+  .featureItem h3 {
+    margin: 0 0 6px;
+  }
+}
+
+@media (max-width: 560px) {
+  .content {
+    width: calc(100% - 36px);
+  }
+
+  .hero {
+    min-height: 590px;
+    padding-top: 36px;
+  }
+
+  .identity {
+    gap: 8px;
+  }
+
+  .identityDescriptor {
+    font-size: 8px;
+  }
+
+  .kicker {
+    margin-top: 70px;
+    font-size: 9px;
+  }
+
+  .headline {
+    font-size: clamp(52px, 15vw, 72px);
+  }
+
+  .intro {
+    max-width: 300px;
+    font-size: 16px;
+  }
+
+  .description {
+    max-width: 340px;
+    font-size: 13px;
+  }
+
+  .visual {
+    inset: 17% -44% 0 -7%;
+    opacity: 0.55;
+    mask-image: linear-gradient(90deg, transparent 0%, #000 24%, #000 78%, transparent 100%);
+  }
+
+  .visualFrame {
+    inset: 27% 9% 13% 10%;
+  }
+
+  .visualCaption {
+    font-size: 7px;
+  }
+
+  .connectSection {
+    padding: 29px 0 26px;
+    gap: 17px;
+  }
+
+  .connectHeading h2,
+  .sectionTitleRow h2 {
+    font-size: 19px;
+  }
+
+  .inputRow {
+    flex-direction: column;
+  }
+
+  .connectButton {
+    width: 100%;
+  }
+
+  .assurances {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .statusGrid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .statusItem,
+  .statusItem:first-child {
+    padding: 12px 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--home-border);
+  }
+
+  .statusItem:last-child {
+    border-bottom: 0;
+  }
+
+  .statusItem p {
+    margin-top: 5px;
+  }
+
+  .sectionTitleRow {
+    align-items: start;
+    gap: 12px;
+  }
+
+  .repoCount {
+    margin-top: 8px;
+    text-align: right;
+  }
+
+  .footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroCopy,
+  .statusPulse {
+    animation: none;
+  }
+
+  .scrollCue,
+  .connectButton,
+  .repositoryInput,
+  .repoButton,
+  .repoArrow {
+    transition: none;
+  }
+}
